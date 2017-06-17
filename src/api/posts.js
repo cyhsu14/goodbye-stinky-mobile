@@ -1,5 +1,3 @@
-import axios from 'axios';
-
 // Develop server URL
 const postBaseUrl = 'http://localhost:3000/api';
 
@@ -18,13 +16,17 @@ export function listPosts(isRefrige) {
         url += '?isRefrige=false';
 
     console.log(`Making GET request to: ${url}`);
+    return fetch(url, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(res => {
+            if (res.status !== 200)
+                throw new Error(`Unexpected response code: ${res.status}`);
 
-    return axios.get(url).then(function(res) {
-        if (res.status !== 200)
-            throw new Error(`Unexpected response code: ${res.status}`);
+            return res.json();
+        });
 
-        return res.data;
-    });
 }
 
 export function createPost(isRefrige, foodDetail) {
@@ -35,15 +37,21 @@ export function createPost(isRefrige, foodDetail) {
         url += '?isRefrige=false';
 
     console.log(`Making POST request to: ${url}`);
+    return fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ...foodDetail
+            })
+        }).then(function(res) {
+            if (res.status !== 200)
+                throw new Error(`Unexpected response code: ${res.status}`);
 
-    return axios.post(url, {
-        ...foodDetail
-    }).then(function(res) {
-        if (res.status !== 200)
-            throw new Error(`Unexpected response code: ${res.status}`);
-
-        return res.data;
-    });
+            return res.json();
+        });
 }
 export function updatePost(isRefrige, foodDetail) {
     let url = `${postBaseUrl}/update`;
@@ -53,15 +61,22 @@ export function updatePost(isRefrige, foodDetail) {
         url += '?isRefrige=false';
 
     console.log(`Making POST request to: ${url}`);
+    return fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                ...foodDetail
+            })
+        }).then(function(res) {
+            if (res.status !== 200)
+                throw new Error(`Unexpected response code: ${res.status}`);
 
-    return axios.post(url, {
-        ...foodDetail
-    }).then(function(res) {
-        if (res.status !== 200)
-            throw new Error(`Unexpected response code: ${res.status}`);
+            return res.json();
+        });
 
-        return res.data;
-    });
 }
 export function deletePost(isRefrige, id) {
     let url = `${postBaseUrl}/posts/${id}`;
@@ -73,10 +88,14 @@ export function deletePost(isRefrige, id) {
 
     console.log(`Making GET request to: ${url}`);
 
-    return axios.get(url).then(function(res) {
-        if (res.status !== 200)
-            throw new Error(`Unexpected response code: ${res.status}`);
+    return fetch(url, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        }).then(res => {
+            if (res.status !== 200)
+                throw new Error(`Unexpected response code: ${res.status}`);
 
-        return res.data;
-    });
+            return res.json();
+        });
 }
