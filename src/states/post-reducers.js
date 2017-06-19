@@ -122,22 +122,23 @@ const initPostItemState = {
 };
 
 export function postItem(state = initPostItemState, action) {
-    switch (action.type) {
-        case '@POST_ITEM/TOGGLE_TOOLTIP':
-            return {
-                tooltipOpen: {
-                    // ...state.tooltipOpen,
-                    [action.id]: state.tooltipOpen[action.id] ? false : true
-                }
-            };
-        case '@POST_ITEM/SET_TOOLTIP_TOGGLE':
-            return {
-                tooltipOpen: {
-                    // ...state.tooltipOpen,
-                    [action.id]: action.toggle
-                }
-            };
-        default:
-            return state;
-    }
+    // switch (action.type) {
+    //     case '@POST_ITEM/TOGGLE_TOOLTIP':
+    //         return {
+    //             tooltipOpen: {
+    //                 // ...state.tooltipOpen,
+    //                 [action.id]: state.tooltipOpen[action.id] ? false : true
+    //             }
+    //         };
+    //     case '@POST_ITEM/SET_TOOLTIP_TOGGLE':
+    //         return {
+    //             tooltipOpen: {
+    //                 // ...state.tooltipOpen,
+    //                 [action.id]: action.toggle
+    //             }
+    //         };
+    //     default:
+    //         return state;
+    // }
+    return state;
 }

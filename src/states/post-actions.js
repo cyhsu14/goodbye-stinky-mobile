@@ -1,5 +1,5 @@
 import {
-    listPosts as listPostsFromApi,
+    listStorages as listPostsFromApi,
     createPost as createPostFromApi,
     createVote as createVoteFromApi
 } from '../api/posts.js';
@@ -63,6 +63,9 @@ export function listPosts(searchText) {
     return (dispatch, getState) => {
         dispatch(startListPosts());
         return listPostsFromApi(searchText).then(posts => {
+            console.log("endlist~");
+            console.log(posts);
+            console.log(endListPosts(posts));
             dispatch(endListPosts(posts));
         }).catch(err => {
             dispatch(endListPosts());

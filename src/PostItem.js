@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {View, StyleSheet, Text, Platform, Image, TouchableHighlight} from 'react-native';
+import {View, StyleSheet, Text, Platform, Image} from 'react-native';
 
 import {connect} from 'react-redux';
 import {createVote, setTooltipToggle, toggleTooltip} from '../states/post-actions';
@@ -27,14 +27,22 @@ class PostItem extends React.Component {
     render() {
         // console.log("props");
         // console.log(this.props);
-        // console.log(getFoodIcon(this.props.name1));
+        console.log(getFoodIcon(this.props.name1));
         if(this.props.valid != false){
             return (
                 <ListItem onPress={this.handleTooltipToggle} style={StyleSheet.flatten(styles.listItem)}>
-                    <View>
+                    <View style={styles.post}>
                         <View style={styles.wrap}>
-                            {getFoodIcon(this.props.name)}
-                            <Text style={styles.text}>{this.props.name}</Text>
+                            {getFoodIcon(this.props.name1)}
+                            <Text style={styles.text}>{this.props.name1}</Text>
+                        </View>
+                        <View style={styles.wrap}>
+                            {getFoodIcon(this.props.name2)}
+                            <Text style={styles.text}>{this.props.name2}</Text>
+                        </View>
+                        <View style={styles.wrap}>
+                            {getFoodIcon(this.props.name3)}
+                            <Text style={styles.text}>{this.props.name3}</Text>
                         </View>
                     </View>
                 </ListItem>
@@ -67,10 +75,14 @@ const styles = StyleSheet.create({
     listItem: {
         flexDirection: 'column',
         alignItems: 'stretch',
-        width: 100
+        marginLeft: 0
     },
     nullList:{
         display:'none'
+    },  
+    post: {
+        flexDirection: 'row',
+        alignItems: 'flex-start'
     },
     mood: {
         width: 48,
@@ -84,15 +96,8 @@ const styles = StyleSheet.create({
         height: 60
     },
     wrap: {
-        justifyContent: 'center',
-        padding: 5,
-        width: 100,
-        height: 100,
-        backgroundColor: '#F6F6F6',
-        alignItems: 'center',
-        borderWidth: 1,
-        borderRadius: 5,
-        borderColor: '#CCC'
+        flex: 1,
+        alignItems: 'center'
     },  
     text: {
         fontSize: 17,

@@ -7,6 +7,7 @@ import {
 import {connect} from 'react-redux';
 import {createPost, input, inputDanger} from '../states/post-actions';
 import {setToast} from '../states/toast';
+import {addStorage} from '../api/posts.js';
 
 import {Container, Header, Content, Title, Left, Right, Body, Icon, Button, Item, Label, Input} from 'native-base';
 import appColors from '../styles/colors';
@@ -74,14 +75,39 @@ class PostFormScreen extends React.Component {
     handleCreatPost() {
         const {mood, inputValue, dispatch} = this.props;
         const {goBack} = this.props.navigation;
+        
+        //ours
+
         if (inputValue) {
-            dispatch(createPost(mood, inputValue)).then(() => {
-                dispatch(setToast('Posted.'));
-            });
+            const foodInfo={
+                category: '',
+                name: inputValue,
+                quantity: 1,
+                unit: 'na',
+                isSetDeadline: false,
+                deadline: "",
+                isAlarm: false,
+                alarmDate: "",
+                alarmTime: "",
+                text: '',
+                isRefrige: true,        //need to be changed later
+                isTimeOut: false
+            }
+            addStorage(foodInfo);
+            console.log("addStorage");
             goBack();
-        } else {
-            dispatch(inputDanger(true));
         }
+
+        // teacher's
+
+        // if (inputValue) {
+        //     dispatch(createPost(mood, inputValue)).then(() => {
+        //         dispatch(setToast('Posted.'));
+        //     });
+        //     goBack();
+        // } else {
+        //     dispatch(inputDanger(true));
+        // }
     }
 }
 

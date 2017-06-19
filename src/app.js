@@ -9,19 +9,19 @@ import {createStore, combineReducers, compose, applyMiddleware} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import loggerMiddleware from 'redux-logger';
 import {Provider, connect} from 'react-redux';
-// import {search} from './states/search';
-// import {toast} from './states/toast';
-// import {post, postForm, postItem} from './states/post-reducers';
+import {search} from './states/search';
+import {toast} from './states/toast';
+import {post, postForm, postItem} from './states/post-reducers';
 
 import {StackNavigator, NavigationActions, addNavigationHelpers} from 'react-navigation';
-import RefeigeScreen from './components/RefrigeScreen';
-import FoodInfoScreen from './components/FoodInfoScreen';
+import RefrigeScreen from './components/RefrigeScreen';
+import PostFormScreen from './components/PostFormScreen';
 import FreezerScreen from './components/FreezerScreen';
 
 const AppNavigator = StackNavigator({
-    Refrige: {screen: RefrigeScreen},
+    Refriger: {screen: RefrigeScreen},
     Freezer: {screen: FreezerScreen},
-    FoodInfo: {screen: FoodInfoScreen}
+    PostForm: {screen: PostFormScreen}
 }, {
     headerMode: 'none'
 });
@@ -34,7 +34,6 @@ class AppWithStyleAndNavigator extends React.Component {
                     dispatch: this.props.dispatch,
                     state: this.props.nav
                 })}/>
-                <AppNavigator/>
             </StyleProvider>
         );
     }
@@ -67,9 +66,8 @@ const nav = (state = initialState, action) => {
 
 // Create Redux store
 const store = createStore(combineReducers({
-    nav
-    // , search, toast,
-    // post, postForm, postItem
+    nav, search, toast,
+    post, postForm, postItem
 }), compose(applyMiddleware(thunkMiddleware, loggerMiddleware)));
 
 export default class App extends React.Component {
@@ -77,8 +75,7 @@ export default class App extends React.Component {
         return (
             <Provider store={store}>
                 <AppWithNavState/>
-            {/* <AppWithStyleAndNavigator/> */}
-                </Provider>
+            </Provider>
         );
     }
 }

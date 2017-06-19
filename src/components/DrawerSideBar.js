@@ -17,16 +17,16 @@ export default class DrawerSideBar extends React.Component {
             <Image source={require('../images/account-bg.jpg')} style={styles.header}>
                 <Thumbnail large source={require('../images/account.jpg')} />
             </Image>
-            <Button block transparent style={styles.item} onPress={() => navigate('Today')}>
+            <Button block transparent style={styles.item} onPress={() => navigate('Refriger')}>
                 <Icon name='rocket' style={styles.icon} />
-                <Text style={styles.text}>Today</Text>
+                <Text style={styles.text}>Refriger</Text>
                 <Badge primary style={styles.badge}>
                     <NbText style={styles.badgeText}>2</NbText>
                 </Badge>
             </Button>
-            <Button block transparent style={styles.item} onPress={() => navigate('Forecast')}>
+            <Button block transparent style={styles.item} onPress={() => navigate('Freezer')}>
                 <Icon name='tag-multiple' style={styles.icon} />
-                <Text style={styles.text}>Forecast</Text>
+                <Text style={styles.text}>Freezer</Text>
             </Button>
             <Button block transparent style={styles.item}>
                 <Icon name='settings' style={styles.icon}

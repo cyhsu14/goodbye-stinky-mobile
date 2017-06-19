@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
     View,
-    ListView, RefreshControl
+    ListView, 
+    RefreshControl,
+    StyleSheet
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 
@@ -10,6 +12,47 @@ import PostItem from './PostItem';
 
 import {connect} from 'react-redux';
 import {listPosts, listMorePosts} from '../states/post-actions';
+
+var i=1;
+var foods={
+    valid: false,
+    id1 :"",
+    name1:"",
+    category1:"",
+    quantity1:NaN,
+    unit1:"",
+    isSetDeadline1:false,
+    deadline1:"",
+    isAlarm1:false,
+    alarmDate1:"" ,
+    alarmTime1:"" ,
+    text1:"",
+    isRefrige: false,
+
+    id2 :"",
+    name2:"",
+    category2:"",
+    quantity2:NaN,
+    unit2:"",
+    isSetDeadline2:false,
+    deadline2:"",
+    isAlarm2:false,
+    alarmDate2:"" ,
+    alarmTime2:"" ,
+    text2:"",
+
+    id3 :"",
+    name3:"",
+    category3:"",
+    quantity3:NaN,
+    unit3:"",
+    isSetDeadline3:false,
+    deadline3:"",
+    isAlarm3:false,
+    alarmDate3:"" ,
+    alarmTime3:"" ,
+    text3:""
+}
 
 class PostList extends React.Component {
     static propTypes = {
@@ -35,19 +78,21 @@ class PostList extends React.Component {
         };
 
         this.handleRefresh = this.handleRefresh.bind(this);
-        this.handleLoadMore = this.handleLoadMore.bind(this);
+        // this.handleLoadMore = this.handleLoadMore.bind(this);
     }
 
     componentDidMount() {
-        this.props.dispatch(listPosts(this.props.searchText));
+        this.props.dispatch(listPosts(true)); //need to be changed later
     }
 
     componentWillReceiveProps(nextProps) {
         const {searchText, dispatch, posts} = this.props;
         if (searchText !== nextProps.searchText) {
-            dispatch(listPosts(nextProps.searchText));
+            dispatch(listPosts(true));       //need to be changed later
         }
         if (posts !== nextProps.posts) {
+            console.log("next");
+            console.log(nextProps.posts);
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(nextProps.posts)
             });
@@ -56,24 +101,17 @@ class PostList extends React.Component {
 
     render() {
         const {listingPosts, hasMorePosts, posts, scrollProps} = this.props;
+
         return (
             <ListView
                 refreshControl={
                     <RefreshControl refreshing={listingPosts} onRefresh={this.handleRefresh} />
                 }
-                distanceToLoadMore={300}
-                renderScrollComponent={props => <InfiniteScrollView {...props} />}
                 dataSource={this.state.dataSource}
                 renderRow={(p) => {
-                    return <PostItem {...p} />;
+                    return <PostItem {...p} />;                            
                 }}
-                canLoadMore={() => {
-                    if (listingPosts || !posts.length)
-                        return false;
-                    return hasMorePosts;
-                }}
-                onLoadMoreAsync={this.handleLoadMore}
-                style={{backgroundColor: '#fff'}}
+                contentContainerStyle={styles.list}
                 ref={(el) => this.listEl = el}
                 {...scrollProps}
             />
@@ -82,16 +120,22 @@ class PostList extends React.Component {
 
     handleRefresh() {
         const {dispatch, searchText} = this.props;
-        dispatch(listPosts(searchText));
+        dispatch(listPosts(true));      //need to be changed later
     }
 
-    handleLoadMore() {
-        const {listingMorePosts, dispatch, posts, searchText} = this.props;
-        const start = posts[posts.length - 1].id;
-        if (listingMorePosts !== start)
-            dispatch(listMorePosts(searchText, start));
-    }
+    // handleLoadMore() {
+    //     const {listingMorePosts, dispatch, posts, searchText} = this.props;
+    //     const start = posts[posts.length - 1].id;
+    //     dispatch(listMorePosts(searchText, start));
+    // }
 }
+const styles = StyleSheet.create({
+    list: {
+        justifyContent: 'center',
+        flexDirection: 'row',
+        flexWrap: 'wrap'
+    }
+});
 
 export default connect((state, ownProps) => ({
     searchText: state.search.searchText,
