@@ -12,16 +12,16 @@ export function listStorages(isRefrige) {
     if(isRefrige == true){
         return AsyncStorage.getItem("refrige").then(p =>{
             let posts = p ? JSON.parse(p) : [];
-            console.log("from refrige listposts");
-            console.log(posts);
+            // console.log("from refrige listposts");
+            // console.log(posts);
             return posts;
         });
     }
     else {
         return AsyncStorage.getItem("freezer").then(p =>{
             let posts = p ? JSON.parse(p) : [];
-            console.log("from freezer listposts");
-            console.log(posts);
+            // console.log("from freezer listposts");
+            // console.log(posts);
             return posts;
         });
     }
@@ -32,29 +32,29 @@ export function addStorage(foodInfo){
         id : uuid(),
         ...foodInfo
     };
-    console.log(newStorage);
+    // console.log(newStorage);
 
     let storages;
     if(foodInfo.isRefrige == true){
         AsyncStorage.getItem("refrige").then(p =>{
             let posts = p ? JSON.parse(p) : [];
             storages=[
-                newStorage,
-                ...posts
+                ...posts,
+                newStorage
             ];
             AsyncStorage.setItem("refrige", JSON.stringify(storages));
-            console.log(storages);
+            // console.log(storages);
         });
     }
     else{
         AsyncStorage.getItem("freezer").then(p =>{
         let posts = p ? JSON.parse(p) : [];
         storages=[
-            newStorage,
-            ...posts
+            ...posts,
+            newStorage
         ];
         AsyncStorage.setItem("freezer", JSON.stringify(storages));
-        console.log(storages);
+        // console.log(storages);
     });
     }
 

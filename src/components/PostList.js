@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
     View,
-    ListView, 
+    ListView,
     RefreshControl,
     StyleSheet,
     Fab
@@ -93,8 +93,8 @@ class PostList extends React.Component {
             dispatch(listPosts(this.props.isRefrige));       //need to be changed later
         }
         if (posts !== nextProps.posts) {
-            console.log("next");
-            console.log(nextProps.posts);
+            // console.log("next");
+            // console.log(nextProps.posts);
             this.setState({
                 dataSource: this.state.dataSource.cloneWithRows(nextProps.posts)
             });
@@ -103,9 +103,9 @@ class PostList extends React.Component {
 
     render() {
         const {listingPosts, hasMorePosts, posts, scrollProps} = this.props;
-        console.log("in postlist!~~");
-        console.log("in postlist!~~");
-        console.log("in postlist!~~");
+        // console.log("in postlist!~~");
+        // console.log("in postlist!~~");
+        // console.log("in postlist!~~");
         if(posts.length>0){
             return (
             <ListView
@@ -114,7 +114,7 @@ class PostList extends React.Component {
                 }
                 dataSource={this.state.dataSource}
                 renderRow={(p) => {
-                    return <PostItem {...p} />;                            
+                    return <PostItem {...p} />;
                 }}
                 contentContainerStyle={styles.list}
                 ref={(el) => this.listEl = el}
@@ -129,7 +129,7 @@ class PostList extends React.Component {
                 </View>
             );
         }
-        
+
     }
 
     handleRefresh() {

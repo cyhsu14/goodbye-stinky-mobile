@@ -63,9 +63,9 @@ export function listPosts(searchText) {
     return (dispatch, getState) => {
         dispatch(startListPosts());
         return listPostsFromApi(searchText).then(posts => {
-            console.log("endlist~");
-            console.log(posts);
-            console.log(endListPosts(posts));
+            // console.log("endlist~");
+            // console.log(posts);
+            // console.log(endListPosts(posts));
             dispatch(endListPosts(posts));
         }).catch(err => {
             dispatch(endListPosts());

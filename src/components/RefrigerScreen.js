@@ -16,9 +16,11 @@ import NavigationContainer from './NavigationContainer';
 import {clearStorages} from '../api/posts.js';
 
 import {connect} from 'react-redux';
-import {selectMood} from '../states/post-actions';
+import {selectFood} from '../states/store-actions';
 import {setToast} from '../states/toast';
 
+// import dismissKeyboard from 'dismissKeyboard';
+// dismissKeyboard();
 class RefrigerScreen extends React.Component {
     static propTypes = {
         creatingPost: PropTypes.bool.isRequired,
@@ -79,7 +81,10 @@ class RefrigerScreen extends React.Component {
                 <View style={{flex: 1, justifyContent: 'center'}}>
                     <PostList  isRefrige={true}/>
                 </View>
-
+                {this.state.modalToggle &&
+                    <TouchableWithoutFeedback onPress={this.handleOpenModal}>
+                        <View style={styles.fabMask}/>
+                    </TouchableWithoutFeedback>}
                 <Fab
                     active={false}
                     containerStyle={styles.fabContainer}
@@ -251,7 +256,7 @@ class RefrigerScreen extends React.Component {
         console.log(name);
 
         // this.handleFabClose();
-        this.props.dispatch(selectMood('clear'));
+        this.props.dispatch(selectFood(category, name, true));
         this.props.navigation.navigate('PostForm');
         // this.props.navigation.navigate('FoodInfo');
         this.setState({
