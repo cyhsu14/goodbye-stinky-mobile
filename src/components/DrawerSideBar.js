@@ -20,9 +20,6 @@ export default class DrawerSideBar extends React.Component {
             <Button block transparent style={styles.item} onPress={() => navigate('Refriger')}>
                 <Icon name='rocket' style={styles.icon} />
                 <Text style={styles.text}>Refriger</Text>
-                <Badge primary style={styles.badge}>
-                    <NbText style={styles.badgeText}>2</NbText>
-                </Badge>
             </Button>
             <Button block transparent style={styles.item} onPress={() => navigate('Freezer')}>
                 <Icon name='tag-multiple' style={styles.icon} />

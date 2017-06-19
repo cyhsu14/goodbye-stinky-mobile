@@ -60,6 +60,15 @@ export function addStorage(foodInfo){
 
 }
 
+export function clearStorages(isRefrige){
+    if(isRefrige==true){
+        AsyncStorage.removeItem("refrige");
+    }
+    else{
+        AsyncStorage.removeItem("freezer");
+    }
+}
+
 // function _listStorages() {
 //     AsyncStorage.getItem("foods").then(p =>{
 //         let posts = p ? JSON.parse(p) : [];

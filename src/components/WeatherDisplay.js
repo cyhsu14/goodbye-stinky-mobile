@@ -9,8 +9,7 @@ class WeatherDisplay extends React.Component {
     render() {
         return (
             <View style={styles.display}>
-                <Image source={require('../images/w-na.png')}  style={styles.image} />
-                <Text style={styles.temp}> NaN&deg;c </Text>
+
             </View>
         );
     }

@@ -90,7 +90,7 @@ class PostFormScreen extends React.Component {
                 alarmDate: "",
                 alarmTime: "",
                 text: '',
-                isRefrige: true,        //need to be changed later
+                isRefrige: false,        //need to be changed later
                 isTimeOut: false
             }
             addStorage(foodInfo);

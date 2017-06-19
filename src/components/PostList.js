@@ -4,9 +4,11 @@ import {
     View,
     ListView, 
     RefreshControl,
-    StyleSheet
+    StyleSheet,
+    Fab
 } from 'react-native';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 import PostItem from './PostItem';
 
@@ -82,13 +84,13 @@ class PostList extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(listPosts(true)); //need to be changed later
+        this.props.dispatch(listPosts(this.props.isRefrige)); //need to be changed later
     }
 
     componentWillReceiveProps(nextProps) {
         const {searchText, dispatch, posts} = this.props;
         if (searchText !== nextProps.searchText) {
-            dispatch(listPosts(true));       //need to be changed later
+            dispatch(listPosts(this.props.isRefrige));       //need to be changed later
         }
         if (posts !== nextProps.posts) {
             console.log("next");
@@ -101,8 +103,11 @@ class PostList extends React.Component {
 
     render() {
         const {listingPosts, hasMorePosts, posts, scrollProps} = this.props;
-
-        return (
+        console.log("in postlist!~~");
+        console.log("in postlist!~~");
+        console.log("in postlist!~~");
+        if(posts.length>0){
+            return (
             <ListView
                 refreshControl={
                     <RefreshControl refreshing={listingPosts} onRefresh={this.handleRefresh} />
@@ -115,12 +120,21 @@ class PostList extends React.Component {
                 ref={(el) => this.listEl = el}
                 {...scrollProps}
             />
-        );
+            );
+        }
+        else{
+            return(
+                <View style={styles.noThing}>
+                    <Icon name='question' style={styles.content}/>
+                </View>
+            );
+        }
+        
     }
 
     handleRefresh() {
         const {dispatch, searchText} = this.props;
-        dispatch(listPosts(true));      //need to be changed later
+        dispatch(listPosts(this.props.isRefrige));      //need to be changed later
     }
 
     // handleLoadMore() {
@@ -134,6 +148,16 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         flexDirection: 'row',
         flexWrap: 'wrap'
+    },
+    noThing: {
+        alignItems: 'center',
+        justifyContent: 'center'
+
+    },
+    content: {
+        fontSize: 60,
+        textAlign: 'center',
+        margin: 10,
     }
 });
 

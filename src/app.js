@@ -14,12 +14,12 @@ import {toast} from './states/toast';
 import {post, postForm, postItem} from './states/post-reducers';
 
 import {StackNavigator, NavigationActions, addNavigationHelpers} from 'react-navigation';
-import RefrigeScreen from './components/RefrigeScreen';
+import RefrigerScreen from './components/RefrigerScreen';
 import PostFormScreen from './components/PostFormScreen';
 import FreezerScreen from './components/FreezerScreen';
 
 const AppNavigator = StackNavigator({
-    Refriger: {screen: RefrigeScreen},
+    Refriger: {screen: RefrigerScreen},
     Freezer: {screen: FreezerScreen},
     PostForm: {screen: PostFormScreen}
 }, {

@@ -1,19 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {ListView, Text, View, TouchableWithoutFeedback, Image} from 'react-native';
+import {View, TouchableWithoutFeedback, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-import NavigationContainer from './NavigationContainer';
-
-import {Container, Fab, Button, Toast, Content} from 'native-base';
+import {Container, Fab, Button, Toast} from 'native-base';
 import appColors from '../styles/colors';
 import appMetrics from '../styles/metrics';
 import {getMoodIcon} from '../utilities/weather.js';
-
 import ParallaxNavigationContainer from './ParallaxNavigationContainer';
 import PostList from './PostList';
 import PostItem from './PostItem';
 import WeatherDisplay from './WeatherDisplay';
+import NavigationContainer from './NavigationContainer';
 
 import {clearStorages} from '../api/posts.js';
 
@@ -21,10 +19,12 @@ import {connect} from 'react-redux';
 import {selectMood} from '../states/post-actions';
 import {setToast} from '../states/toast';
 
-class FreezerScreen extends React.Component {
+class RefrigeScreen extends React.Component {
     static propTypes = {
-        navigation: PropTypes.object.isRequired,
-        searchText: PropTypes.string.isRequired
+        creatingPost: PropTypes.bool.isRequired,
+        creatingVote: PropTypes.bool.isRequired,
+        toast: PropTypes.string.isRequired,
+        dispatch: PropTypes.func.isRequired
     };
 
     constructor(props) {
@@ -38,28 +38,58 @@ class FreezerScreen extends React.Component {
         this.handleCreatePost = this.handleCreatePost.bind(this);
     }
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.toast) {
+            Toast.show({
+                text: nextProps.toast,
+                position: 'bottom',
+                duration: appMetrics.toastDuration
+            })
+            this.props.dispatch(setToast(''));
+        }
+    }
+// <ParallaxNavigationContainer
+//                 navigate={navigate}
+//                 title='Refriger'
+//                 titleLeft={80}
+//                 titleTop={40}
+//                 renderHeaderContent={props => <WeatherDisplay {...props} />}
+//                 renderScroller={props => <PostList scrollProps={props} />}>
+//                 {this.state.fabActive &&
+//                     <TouchableWithoutFeedback onPress={this.handleFabClose}>
+//                         <View style={styles.fabMask}/>
+//                     </TouchableWithoutFeedback>
+//                 }
+//                 <Fab
+//                     active={this.state.fabActive}
+//                     containerStyle={styles.fabContainer}
+//                     style={styles.fab}
+//                     position="bottomRight"
+//                     onPress={() => this.handleCreatePost('Clear')}>
+//                     <Icon name='pencil' />
+//                 </Fab>
+//             </ParallaxNavigationContainer>
     render() {
-        const {searchText} = this.props;
         const {navigate} = this.props.navigation;
         return (
-            <NavigationContainer navigate={navigate} title='Freezer'>
+            <NavigationContainer navigate={navigate} title='Refriger'>
                 <View style={{flex: 1, justifyContent: 'center'}}>
-                    <PostList  isRefrige={false}/>
+                    <PostList  isRefrige={true}/>
                 </View>
                 <Fab
                 active={this.state.fabActive}
                 containerStyle={styles.fabContainer}
                 style={styles.fab}
                 position="bottomRight"
-                onPress={() => this.handleCreatePost('Snow')}>
-                    <Icon name='pencil' />
+                onPress={() => this.handleCreatePost('Windy')}>
+                <Icon name='pencil' />
                 </Fab>
                 <Fab
                 active={this.state.fabActive}
                 containerStyle={styles.fabContainer}
                 style={styles.fab}
                 position="bottomLeft"
-                onPress={() => clearStorages(false)}>
+                onPress={() => clearStorages(true)}>
                     <Icon name="question" />
                 </Fab>                
             </NavigationContainer>
@@ -76,6 +106,7 @@ class FreezerScreen extends React.Component {
         this.props.navigation.navigate('PostForm');
     }
 }
+
 const styles = {
     fabMask: {
         position: 'absolute',
@@ -98,6 +129,9 @@ const styles = {
         color: appColors.primaryLightText
     }
 };
-export default connect(state => ({
-    searchText: state.search.searchText,
-}))(FreezerScreen);
+
+export default connect((state, ownProps) => ({
+    creatingPost: state.post.creatingPost,
+    creatingVote: state.post.creatingVote,
+    toast: state.toast
+}))(RefrigeScreen);
